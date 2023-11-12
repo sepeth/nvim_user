@@ -5,6 +5,15 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 return {
+
+  mappings = {
+
+    n = {
+      ["<D-p>"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" }
+    }
+
+  },
+
   plugins = {
 
     -- Theme
