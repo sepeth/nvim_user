@@ -45,7 +45,23 @@ return {
         opts.defaults.mappings.i["<C-j>"] = actions.cycle_history_next
         opts.defaults.mappings.i["<C-k>"] = actions.cycle_history_prev
       end,
-    }
+    },
+
+    {
+      "hrsh7th/nvim-cmp",
+
+      -- override the options table that is used in the `require("cmp").setup()` call
+      opts = function(_, opts)
+        -- opts parameter is the default options table
+        -- the function is lazy loaded so cmp is able to be required
+        local cmp = require "cmp"
+
+        opts.mapping['<C-b>'] = cmp.mapping.scroll_docs(-4)
+        opts.mapping['<C-f>'] = cmp.mapping.scroll_docs(4)
+
+        return opts
+      end,
+    },
 
   },
 
