@@ -9,8 +9,9 @@ return {
   mappings = {
 
     n = {
-      ["<D-p>"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" }
-    }
+      ["<D-p>"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" },
+      ["<C-k>"] = { ':lua require("dash").search(true, vim.fn.expand("<cword>"))<CR>', desc = "Find word under Dash.app"},
+    },
 
   },
 
@@ -61,6 +62,11 @@ return {
 
         return opts
       end,
+    },
+
+    {
+      "Kapeli/dash.nvim",
+      lazy = false,
     },
 
   },
