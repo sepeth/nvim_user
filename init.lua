@@ -1,8 +1,14 @@
--- Remove trailing whitespaces
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  command = [[%s/\s\+$//e]],
-})
+function StripTrailingSpaces()
+  -- save last search and cursor position before you do
+  vim.cmd([[
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    let @/=_s
+    call cursor(l, c)
+  ]])
+end
 
 -- Zoom in/out should work in Neovide
 if vim.g.neovide == true then
@@ -11,6 +17,7 @@ if vim.g.neovide == true then
   vim.api.nvim_set_keymap("n", "<D-0>", ":lua vim.g.neovide_scale_factor = 1<CR>", { silent = true })
 end
 
+
 return {
 
   mappings = {
@@ -18,6 +25,10 @@ return {
     n = {
       ["<D-p>"] = { function() require("telescope.builtin").find_files() end, desc = "Find files" },
       ["<C-k>"] = { ':lua require("dash").search(true, vim.fn.expand("<cword>"))<CR>', desc = "Find word under Dash.app"},
+      ["<leader>ss"] = {
+        function() StripTrailingSpaces() end,
+        desc = "Strip trailing spaces"
+      },
     },
 
   },
